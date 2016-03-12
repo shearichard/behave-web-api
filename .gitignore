@@ -1,0 +1,7 @@
+*.py[cod]
+*.pid
+*.out
+*.egg-info
+venv
+build
+dist
