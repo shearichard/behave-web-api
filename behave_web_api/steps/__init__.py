@@ -2,7 +2,7 @@ import os
 import json
 import mimetypes
 from behave import *
-from collections import OrderedDict
+from ordereddict import OrderedDict
 
 from behave_web_api.utils import dereference_arguments, do_request,\
     compare_values, compare_contents
