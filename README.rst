@@ -59,16 +59,16 @@ And run using BASE_URL environment variable:
 Available Steps
 ---------------
 
--  I set variable "{}" with value "{}"
--  I set header "{}" with value "{}"
--  I attach the file "{}" as "{}"
--  I send a {} request to "{}" with body
--  I send a {} request to "{}" with values
--  I send a {} request to "{}"
--  the response code should be {}
--  the response should contain json
--  the response should contain text
--  print response
+-  Given I set variable "{}" with value "{}"
+-  Given I set header "{}" with value "{}"
+-  Given I attach the file "{}" as "{}"
+-  When I send a {} request to "{}" with body:
+-  When I send a {} request to "{}" with values:
+-  When I send a {} request to "{}"
+-  Then the response code should be {}
+-  Then the response should contain json:
+-  Then the response should contain text:
+-  Then print response
 
 
 Acknowledgments

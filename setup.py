@@ -8,6 +8,7 @@ setup_requires = ['wheel']
 install_requires = [
     'behave>=1.2.4',
     'requests>=2.0.0',
+    'ordereddict==1.1'
 ]
 
 
