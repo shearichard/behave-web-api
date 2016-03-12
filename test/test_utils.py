@@ -18,7 +18,7 @@ class UtilsTest(unittest.TestCase):
         except AssertionError as e:
             error = e
 
-        self.assertIsNone(error)
+        self.assertIsNone(None, error)
 
     def test_is_comparing_values_with_non_matched_regex(self):
         error = None
@@ -79,7 +79,7 @@ class UtilsTest(unittest.TestCase):
         except AssertionError as e:
             error = e
 
-        self.assertIsNone(error)
+        self.assertIsNone(None, error)
 
     def test_is_comparing_contents_with_non_matched_regex(self):
         error = None
@@ -108,7 +108,7 @@ class UtilsTest(unittest.TestCase):
         except AssertionError as e:
             error = e
 
-        self.assertIsNone(error)
+        self.assertIsNone(None, error)
 
     def test_is_comparing_contents_with_non_matched_string(self):
         error = None

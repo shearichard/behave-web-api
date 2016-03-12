@@ -13,9 +13,9 @@ except NameError:  # Python 3, basestring causes NameError
 def make_url(context, endingpoint):
     BASE_URL = dereference_variables(context, '$BASE_URL')
     if 'http' not in BASE_URL:
-        BASE_URL = 'http://{}'.format(BASE_URL)
+        BASE_URL = 'http://{0}'.format(BASE_URL)
 
-    return '{}{}'.format(BASE_URL, endingpoint)
+    return '{0}{1}'.format(BASE_URL, endingpoint)
 
 
 def dereference_variables(context, value):
@@ -52,12 +52,12 @@ def dereference_arguments(f):
 
 def compare_lists(expected_list, actual_list, path=None):
     assert type(expected_list) is list,\
-        "Expected {} is not a list".format(repr(expected_list))
+        "Expected {0} is not a list".format(repr(expected_list))
     assert type(actual_list) is list,\
-        "Actual {} is not a list".format(repr(actual_list))
+        "Actual {0} is not a list".format(repr(actual_list))
 
     for i, item in enumerate(expected_list):
-        path = '{}.{}'.format(path, i) if path else str(i)
+        path = '{0}.{1}'.format(path, i) if path else str(i)
         try:
             actual_value = actual_list[i]
         except ValueError:
@@ -67,14 +67,14 @@ def compare_lists(expected_list, actual_list, path=None):
 
 def compare_dicts(expected_dict, actual_dict, path=None):
     assert type(expected_dict) is dict,\
-        "Expected {} is not a dict".format(repr(expected_dict))
+        "Expected {0} is not a dict".format(repr(expected_dict))
     assert type(actual_dict) is dict,\
-        "Actual {} is not a dict".format(repr(actual_dict))
+        "Actual {0} is not a dict".format(repr(actual_dict))
 
     for key in expected_dict:
         expected_value = expected_dict[key]
         actual_value = actual_dict.get(key, None)
-        path = '{}.{}'.format(path, key) if path else key
+        path = '{0}.{1}'.format(path, key) if path else key
 
         compare_values(expected_value, actual_value, path=path)
 
@@ -88,11 +88,11 @@ def compare_values(expected_value, actual_value, path=None):
             and expected_value[0] == '%'\
             and expected_value[-1] == '%':
         if not re.match(expected_value.strip('%'), actual_value or ''):
-            message = 'Expected {} to match regex {}'
+            message = 'Expected {0} to match regex {1}'
             params = [repr(actual_value), repr(expected_value)]
 
             if path:
-                message = message + ' at path {}'
+                message = message + ' at path {2}'
                 params.append(path)
 
             raise AssertionError(message.format(*params))
@@ -100,11 +100,11 @@ def compare_values(expected_value, actual_value, path=None):
         try:
             assert expected_value == actual_value
         except AssertionError:
-            message = 'Expected {} to equal {}'
+            message = 'Expected {0} to equal {1}'
             params = [repr(actual_value), repr(expected_value)]
 
             if path:
-                message = message + ' at path {}'
+                message = message + ' at path {2}'
                 params.append(path)
 
             raise AssertionError(message.format(*params))
@@ -113,10 +113,10 @@ def compare_values(expected_value, actual_value, path=None):
 def compare_contents(expected_value, actual_value):
     if expected_value[0] == '%' and expected_value[-1] == '%':
         assert re.search(expected_value.strip('%'), actual_value or ''),\
-            'Expected response to contain regex \'{}\''.format(expected_value)
+            'Expected response to contain regex \'{0}\''.format(expected_value)
     else:
         assert expected_value in actual_value,\
-            'Expected response to contain text \'{}\''.format(expected_value)
+            'Expected response to contain text \'{0}\''.format(expected_value)
 
 
 def do_request(context, method, endingpoint, body=None):
