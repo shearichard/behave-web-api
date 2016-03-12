@@ -6,7 +6,7 @@ app = Bottle()
 @app.route('/requests/echo', method='ANY')
 def echo():
     try:
-        body = request.body.read().encode('utf-8')
+        body = request.body.read().decode('utf-8')
     except:
         body = None
 

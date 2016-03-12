@@ -29,7 +29,7 @@ Feature: Doing http requests
     """
         {
             "method": "POST",
-            "body": "age=42&name=Wilson"
+            "body": "name=Wilson&age=42"
         }
     """
 

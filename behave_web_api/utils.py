@@ -4,6 +4,11 @@ import re
 import requests
 from functools import wraps
 
+try:
+    string_type = basestring
+except NameError:  # Python 3, basestring causes NameError
+    string_type = str
+
 
 def make_url(context, endingpoint):
     BASE_URL = dereference_variables(context, '$BASE_URL')
@@ -79,7 +84,7 @@ def compare_values(expected_value, actual_value, path=None):
         compare_dicts(expected_value, actual_value, path=path)
     elif type(expected_value) is list:
         compare_lists(expected_value, actual_value, path=path)
-    elif isinstance(expected_value, basestring)\
+    elif isinstance(expected_value, string_type)\
             and expected_value[0] == '%'\
             and expected_value[-1] == '%':
         if not re.match(expected_value.strip('%'), actual_value or ''):

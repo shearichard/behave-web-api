@@ -2,6 +2,7 @@ import os
 import json
 import mimetypes
 from behave import *
+from collections import OrderedDict
 
 from behave_web_api.utils import dereference_arguments, do_request,\
     compare_values, compare_contents
@@ -44,7 +45,7 @@ def i_send_a_request_with_body(context, method, endingpoint):
 @when(u'I send a {} request to "{}" with values')
 @dereference_arguments
 def i_send_a_request_with_values(context, method, endingpoint):
-    values = {}
+    values = OrderedDict()
 
     for line in context.text.split(u'\n'):
         pieces = line.split(u'=')

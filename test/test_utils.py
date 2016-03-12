@@ -15,7 +15,7 @@ class UtilsTest(unittest.TestCase):
                     'hi': 'Hello'
                 }
             )
-        except AssertionError, e:
+        except AssertionError as e:
             error = e
 
         self.assertIsNone(error)
@@ -32,12 +32,12 @@ class UtilsTest(unittest.TestCase):
                     'hi': 'Hello'
                 }
             )
-        except AssertionError, e:
+        except AssertionError as e:
             error = e
 
         self.assertEqual(
             'Expected \'Hello\' to equal \'dsa\' at path hi',
-            error.message
+            error.args[0]
         )
 
     def test_is_comparing_dicts(self):
@@ -60,12 +60,12 @@ class UtilsTest(unittest.TestCase):
                     }
                 }
             )
-        except AssertionError, e:
+        except AssertionError as e:
             error = e
 
         self.assertEqual(
             'Expected 4 to equal 3 at path a.b.c.0',
-            error.message
+            error.args[0]
         )
 
     def test_is_comparing_contents_with_matched_regex(self):
@@ -76,7 +76,7 @@ class UtilsTest(unittest.TestCase):
                 '%my name is \w+%',
                 'Hi my name is Bob Bob'
             )
-        except AssertionError, e:
+        except AssertionError as e:
             error = e
 
         self.assertIsNone(error)
@@ -89,12 +89,12 @@ class UtilsTest(unittest.TestCase):
                 '%my name is not \w+%',
                 'Hi my name is Bob Bob'
             )
-        except AssertionError, e:
+        except AssertionError as e:
             error = e
 
         self.assertEqual(
             'Expected response to contain regex \'%my name is not \\w+%\'',
-            error.message
+            error.args[0]
         )
 
     def test_is_comparing_contents_with_matched_string(self):
@@ -105,7 +105,7 @@ class UtilsTest(unittest.TestCase):
                 'my name is',
                 'Hi my name is Bob Bob'
             )
-        except AssertionError, e:
+        except AssertionError as e:
             error = e
 
         self.assertIsNone(error)
@@ -118,10 +118,10 @@ class UtilsTest(unittest.TestCase):
                 'my name is not',
                 'Hi my name is Bob Bob'
             )
-        except AssertionError, e:
+        except AssertionError as e:
             error = e
 
         self.assertEqual(
             'Expected response to contain text \'my name is not\'',
-            error.message
+            error.args[0]
         )
