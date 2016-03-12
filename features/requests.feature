@@ -2,12 +2,12 @@ Feature: Doing http requests
 
   Scenario: Send text body and headers
     Given I set "X-My-Header" header with value "Something"
-    And I send a POST request to "/requests/echo" with body:
+    When I send a POST request to "/requests/echo" with body:
     """
     Something
     """
     Then the response code should be 200
-    Then the response should contain json:
+    And the response should contain json:
     """
         {
             "method": "POST",
@@ -20,7 +20,7 @@ Feature: Doing http requests
 
   Scenario: Send form data
     Given I set "X-My-Header" header with value "Something"
-    And I send a POST request to "/requests/echo" with values:
+    When I send a POST request to "/requests/echo" with values:
     """
     name=Wilson
     age=42
@@ -36,7 +36,7 @@ Feature: Doing http requests
   Scenario: Send file
     Given I set "X-My-Header" header with value "Something"
     And I attach the file "$PWD/features/data/favicon.ico" as "upload"
-    And I send a POST request to "/requests/echo"
+    When I send a POST request to "/requests/echo"
     Then the response should contain json:
     """
         {
@@ -52,7 +52,7 @@ Feature: Doing http requests
 
   Scenario: Set variable
     Given I set "username" variable with value "Bob"
-    And I send a POST request to "/requests/echo" with body:
+    When I send a POST request to "/requests/echo" with body:
     """
     Hello $username
     """

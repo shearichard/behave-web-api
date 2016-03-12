@@ -24,12 +24,12 @@ So you can use the steps in your feature files
 
       Scenario: Send text body and headers
         Given I set "X-My-Header" header with value "Something"
-        And I send a POST request to "/requests/echo" with body:
+        When I send a POST request to "/requests/echo" with body:
         """
         Something
         """
         Then the response code should be 200
-        Then the response should contain json:
+        And the response should contain json:
         """
             {
                 "headers": {
@@ -41,8 +41,8 @@ So you can use the steps in your feature files
 
       Scenario: Send file using variables and environment variables
         Given I set the "DATA_DIR" variable with "$PWD/features/data" 
-        Given I attach the file "$DATA_DIR/favicon.ico" as "upload"
-        And I send a POST request to "/requests/echo"
+        And I attach the file "$DATA_DIR/favicon.ico" as "upload"
+        When I send a POST request to "/requests/echo"
         Then the response code should be 200
         And print response
 

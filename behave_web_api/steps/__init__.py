@@ -15,28 +15,12 @@ def i_set_header_with_value(context, key, value):
     context.request_headers[key] = value
 
 
-@given(u'I send a {} request to "{}" with body')
+@given(u'I set "{}" variable with value "{}"')
 @dereference_arguments
-def i_send_a_request_with_body(context, method, endingpoint):
-    do_request(context, method, endingpoint, context.text)
-
-
-@given(u'I send a {} request to "{}" with values')
-@dereference_arguments
-def i_send_a_request_with_values(context, method, endingpoint):
-    values = {}
-
-    for line in context.text.split(u'\n'):
-        pieces = line.split(u'=')
-        values[pieces[0]] = ''.join(pieces[1:]) if len(pieces) > 1 else ''
-
-    do_request(context, method, endingpoint, values)
-
-
-@given(u'I send a {} request to "{}"')
-@dereference_arguments
-def i_send_a_request(context, method, endingpoint):
-    do_request(context, method, endingpoint)
+def i_set_variable_with_value(context, key, value):
+    if not hasattr(context, 'variables'):
+        context.variables = {}
+    context.variables[key] = value
 
 
 @given(u'I attach the file "{}" as "{}"')
@@ -51,12 +35,28 @@ def i_attach_the_file_as(context, path, key):
     )
 
 
-@given(u'I set "{}" variable with value "{}"')
+@when(u'I send a {} request to "{}" with body')
 @dereference_arguments
-def i_set_variable_with_value(context, key, value):
-    if not hasattr(context, 'variables'):
-        context.variables = {}
-    context.variables[key] = value
+def i_send_a_request_with_body(context, method, endingpoint):
+    do_request(context, method, endingpoint, context.text)
+
+
+@when(u'I send a {} request to "{}" with values')
+@dereference_arguments
+def i_send_a_request_with_values(context, method, endingpoint):
+    values = {}
+
+    for line in context.text.split(u'\n'):
+        pieces = line.split(u'=')
+        values[pieces[0]] = ''.join(pieces[1:]) if len(pieces) > 1 else ''
+
+    do_request(context, method, endingpoint, values)
+
+
+@when(u'I send a {} request to "{}"')
+@dereference_arguments
+def i_send_a_request(context, method, endingpoint):
+    do_request(context, method, endingpoint)
 
 
 @then(u'the response code should be {}')
