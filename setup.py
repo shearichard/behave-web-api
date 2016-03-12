@@ -20,6 +20,7 @@ setup(
     description="Provides testing for JSON APIs with Behave",
     long_description=long_description,
     url='https://github.com/jefersondaniel/behave-web-api',
+    download_url='https://github.com/jefersondaniel/behave-web-api/archive/v1.0.0.tar.gz',
     author='Jeferson Daniel',
     author_email='jeferson.daniel412@gmail.com',
     license='MIT',
