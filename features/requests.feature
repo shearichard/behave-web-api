@@ -1,7 +1,7 @@
 Feature: Doing http requests
 
   Scenario: Send text body and headers
-    Given I set "X-My-Header" header with value "Something"
+    Given I set header "X-My-Header" with value "Something"
     When I send a POST request to "/requests/echo" with body:
     """
     Something
@@ -19,7 +19,7 @@ Feature: Doing http requests
     """
 
   Scenario: Send form data
-    Given I set "X-My-Header" header with value "Something"
+    Given I set header "X-My-Header" with value "Something"
     When I send a POST request to "/requests/echo" with values:
     """
     name=Wilson
@@ -34,7 +34,7 @@ Feature: Doing http requests
     """
 
   Scenario: Send file
-    Given I set "X-My-Header" header with value "Something"
+    Given I set header "X-My-Header" with value "Something"
     And I attach the file "$PWD/features/data/favicon.ico" as "upload"
     When I send a POST request to "/requests/echo"
     Then the response should contain json:
@@ -51,7 +51,7 @@ Feature: Doing http requests
     """
 
   Scenario: Set variable
-    Given I set "username" variable with value "Bob"
+    Given I set variable "username" with value "Bob"
     When I send a POST request to "/requests/echo" with body:
     """
     Hello $username

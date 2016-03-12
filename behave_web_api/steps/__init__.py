@@ -4,10 +4,10 @@ import mimetypes
 from behave import *
 
 from behave_web_api.utils import dereference_arguments, do_request,\
-    compare_values
+    compare_values, compare_contents
 
 
-@given(u'I set "{}" header with value "{}"')
+@given(u'I set header "{}" with value "{}"')
 @dereference_arguments
 def i_set_header_with_value(context, key, value):
     if not hasattr(context, 'request_headers'):
@@ -15,7 +15,7 @@ def i_set_header_with_value(context, key, value):
     context.request_headers[key] = value
 
 
-@given(u'I set "{}" variable with value "{}"')
+@given(u'I set variable "{}" with value "{}"')
 @dereference_arguments
 def i_set_variable_with_value(context, key, value):
     if not hasattr(context, 'variables'):
@@ -71,6 +71,12 @@ def the_response_should_contain_json(context):
     expected_data = json.loads(context.text)
     actual_data = json.loads(context.response.text)
     compare_values(expected_data, actual_data)
+
+
+@then(u'the response should contain text')
+@dereference_arguments
+def the_response_should_contain_text(context):
+    compare_contents(context.text, context.response.text)
 
 
 @then(u'print response')

@@ -67,3 +67,61 @@ class UtilsTest(unittest.TestCase):
             'Expected 4 to equal 3 at path a.b.c.0',
             error.message
         )
+
+    def test_is_comparing_contents_with_matched_regex(self):
+        error = None
+
+        try:
+            utils.compare_contents(
+                '%my name is \w+%',
+                'Hi my name is Bob Bob'
+            )
+        except AssertionError, e:
+            error = e
+
+        self.assertIsNone(error)
+
+    def test_is_comparing_contents_with_non_matched_regex(self):
+        error = None
+
+        try:
+            utils.compare_contents(
+                '%my name is not \w+%',
+                'Hi my name is Bob Bob'
+            )
+        except AssertionError, e:
+            error = e
+
+        self.assertEqual(
+            'Expected response to contain regex \'%my name is not \\w+%\'',
+            error.message
+        )
+
+    def test_is_comparing_contents_with_matched_string(self):
+        error = None
+
+        try:
+            utils.compare_contents(
+                'my name is',
+                'Hi my name is Bob Bob'
+            )
+        except AssertionError, e:
+            error = e
+
+        self.assertIsNone(error)
+
+    def test_is_comparing_contents_with_non_matched_string(self):
+        error = None
+
+        try:
+            utils.compare_contents(
+                'my name is not',
+                'Hi my name is Bob Bob'
+            )
+        except AssertionError, e:
+            error = e
+
+        self.assertEqual(
+            'Expected response to contain text \'my name is not\'',
+            error.message
+        )

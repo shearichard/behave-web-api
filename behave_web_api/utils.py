@@ -53,7 +53,11 @@ def compare_lists(expected_list, actual_list, path=None):
 
     for i, item in enumerate(expected_list):
         path = '{}.{}'.format(path, i) if path else str(i)
-        compare_values(item, actual_list[i], path=path)
+        try:
+            actual_value = actual_list[i]
+        except ValueError:
+            actual_value = None
+        compare_values(item, actual_value, path=path)
 
 
 def compare_dicts(expected_dict, actual_dict, path=None):
@@ -99,6 +103,15 @@ def compare_values(expected_value, actual_value, path=None):
                 params.append(path)
 
             raise AssertionError(message.format(*params))
+
+
+def compare_contents(expected_value, actual_value):
+    if expected_value[0] == '%' and expected_value[-1] == '%':
+        assert re.search(expected_value.strip('%'), actual_value or ''),\
+            'Expected response to contain regex \'{}\''.format(expected_value)
+    else:
+        assert expected_value in actual_value,\
+            'Expected response to contain text \'{}\''.format(expected_value)
 
 
 def do_request(context, method, endingpoint, body=None):
