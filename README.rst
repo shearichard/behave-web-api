@@ -3,7 +3,7 @@ Behave Web Api
 
 |Build Status| |Version|
 
-Provides testing for JSON APIs with Behave
+Provides testing for JSON APIs with Behave [1]_
 
 Installation
 ------------
@@ -12,7 +12,7 @@ Installation
 
     pip install behave-web-api
 
-Import steps in your features/steps/\ **init**.py
+Import steps in your features/steps/__init__.py
 
 .. code:: python
 
@@ -42,7 +42,7 @@ So you can use the steps in your feature files
         """
 
       Scenario: Send file using variables and environment variables
-        Given I set the variable "DATA_DIR" with "$PWD/features/data" 
+        Given I set the variable "DATA_DIR" with value "$PWD/features/data" 
         And I attach the file "$DATA_DIR/favicon.ico" as "upload"
         When I send a POST request to "/requests/echo"
         Then the response code should be 200
@@ -74,9 +74,11 @@ Available Steps
 Acknowledgments
 ---------------
 
-The REST steps are based on Behat WebApiExtension [1]_
+The REST steps are based on Behat WebApiExtension [2]_
 
-.. [1] https://github.com/Behat/WebApiExtension
+.. [1] http://pythonhosted.org/behave/
+
+.. [2] https://github.com/Behat/WebApiExtension
 
 .. |Build Status| image:: https://travis-ci.org/jefersondaniel/behave-web-api.svg
    :target: https://travis-ci.org/jefersondaniel/behave-web-api
