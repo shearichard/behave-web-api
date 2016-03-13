@@ -1,7 +1,7 @@
 Behave Web Api
 ==============
 
-|Build Status|
+|Build Status| |Version|
 
 Provides testing for JSON APIs with Behave
 
@@ -80,3 +80,6 @@ The REST steps are based on Behat WebApiExtension [1]_
 
 .. |Build Status| image:: https://travis-ci.org/jefersondaniel/behave-web-api.svg
    :target: https://travis-ci.org/jefersondaniel/behave-web-api
+
+.. |Version| image:: https://badge.fury.io/py/behave-web-api.svg
+   :target: https://pypi.python.org/pypi/behave-web-api
