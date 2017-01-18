@@ -84,10 +84,11 @@ def compare_values(expected_value, actual_value, path=None):
         compare_dicts(expected_value, actual_value, path=path)
     elif type(expected_value) is list:
         compare_lists(expected_value, actual_value, path=path)
-    elif isinstance(expected_value, string_type)\
-            and expected_value[0] == '%'\
-            and expected_value[-1] == '%':
-        if not re.match(expected_value.strip('%'), actual_value or ''):
+    elif isinstance(expected_value, string_type) \
+            and (expected_value[0] == '%' or expected_value.startswith('INT%')) and expected_value[-1] == '%':
+        if expected_value.startswith('INT%') and \
+            not re.match(expected_value.strip('INT').strip('%'), str(actual_value) or '') or \
+            isinstance(actual_value, string_type) and not re.match(expected_value.strip('%'), actual_value or ''):
             message = 'Expected {0} to match regex {1}'
             params = [repr(actual_value), repr(expected_value)]
 
