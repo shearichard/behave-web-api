@@ -3,6 +3,7 @@ __pycache__
 *.pid
 *.out
 *.egg-info
+*.eggs
 venv
 build
 dist
