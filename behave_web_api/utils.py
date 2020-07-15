@@ -44,7 +44,7 @@ def dereference_arguments(f):
             new_kwargs[key] = dereference_variables(context.text, value)
         for value in args:
             new_args.append(dereference_variables(context.text, value))
-        context.text = dereference_variables(context, context.text)\
+        context.processed_text = dereference_variables(context, context.text)\
             if context.text else ''
         return f(context, *new_args, **new_kwargs)
     return wrapper

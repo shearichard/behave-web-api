@@ -45,7 +45,7 @@ def i_attach_the_file_as(context, path, key):
 @when(u'I send a {} request to "{}" with body')
 @dereference_arguments
 def i_send_a_request_with_body(context, method, endingpoint):
-    do_request(context, method, endingpoint, context.text)
+    do_request(context, method, endingpoint, context.processed_text)
 
 
 @when(u'I send a {} request to "{}" with values')
@@ -53,7 +53,7 @@ def i_send_a_request_with_body(context, method, endingpoint):
 def i_send_a_request_with_values(context, method, endingpoint):
     values = OrderedDict()
 
-    for line in context.text.split(u'\n'):
+    for line in context.processed_text.split(u'\n'):
         pieces = line.split(u'=')
         values[pieces[0]] = ''.join(pieces[1:]) if len(pieces) > 1 else ''
 
@@ -75,7 +75,7 @@ def the_response_should_be(context, status_code):
 @then(u'the response should contain json')
 @dereference_arguments
 def the_response_should_contain_json(context):
-    expected_data = json.loads(context.text)
+    expected_data = json.loads(context.processed_text)
     actual_data = json.loads(context.response.text)
     compare_values(expected_data, actual_data)
 
@@ -83,7 +83,7 @@ def the_response_should_contain_json(context):
 @then(u'the response should contain text')
 @dereference_arguments
 def the_response_should_contain_text(context):
-    compare_contents(context.text, context.response.text)
+    compare_contents(context.processed_text, context.response.text)
 
 
 @then(u'print response')
