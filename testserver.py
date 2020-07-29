@@ -1,3 +1,4 @@
+import json
 from bottle import Bottle, run, request
 
 app = Bottle()
@@ -10,6 +11,14 @@ def echo():
     except:
         body = None
 
+    print(request.headers['Content-Type'])
+
+    if request.headers['Content-Type'] == 'application/json':
+        try:
+            body = json.loads(body)
+        except:
+            pass
+
     result = {
         'method': request.method,
         'headers': dict(request.headers),
@@ -21,5 +30,6 @@ def echo():
     }
 
     return result
+
 
 run(app, host='localhost', port='5000')
