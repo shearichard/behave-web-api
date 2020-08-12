@@ -63,6 +63,16 @@ Feature: Doing http requests
         }
     """
 
+  Scenario: Set variable from file
+    When I send a POST request to "/requests/echo" with body from file "$PWD/features/data/body.txt"
+    Then the response should contain json:
+    """
+        {
+            "body": "Hello World"
+        }
+    """
+    Then print response
+
   Scenario: Send text body and headers
     Given I set header "X-My-Header" with value "Something"
     And I set header "Content-Type" with value "application/json"

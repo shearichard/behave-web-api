@@ -48,6 +48,14 @@ def i_send_a_request_with_body(context, method, endingpoint):
     do_request(context, method, endingpoint, context.processed_text)
 
 
+@when(u'I send a {} request to "{}" with body from file "{}"')
+@dereference_arguments
+def i_send_a_request_with_body_from_file(context, method, endingpoint, filename):
+    with open(filename, 'r') as file:
+        body = file.read().strip()
+    do_request(context, method, endingpoint, body)
+
+
 @when(u'I send a {} request to "{}" with values')
 @dereference_arguments
 def i_send_a_request_with_values(context, method, endingpoint):
