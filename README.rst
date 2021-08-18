@@ -87,7 +87,7 @@ Acknowledgments
 
 The REST steps are based on Behat WebApiExtension [2]_
 
-.. [1] http://pythonhosted.org/behave/
+.. [1] https://behave.readthedocs.io/en/stable/
 
 .. [2] https://github.com/Behat/WebApiExtension
 
