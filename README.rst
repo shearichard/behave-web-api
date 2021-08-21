@@ -96,3 +96,5 @@ The REST steps are based on Behat WebApiExtension [2]_
 
 .. |Version| image:: https://badge.fury.io/py/behave-web-api.svg
    :target: https://pypi.python.org/pypi/behave-web-api
+
+...
