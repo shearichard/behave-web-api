@@ -146,9 +146,9 @@ def validate_value(validator, value):
     if validator == 'positive_integer':
         return type(value) == int and (value >= 0)
     if validator == 'iso_date_time':
-		return validate_value_iso_datetime(value)
+        return validate_value_iso_datetime(value)
     if validator == 'iso_date_time_at_eoe':
-		return validate_value_iso_datetime_at_eoe(value)
+        return validate_value_iso_datetime_at_eoe(value)
 
     raise Exception('Unknown validator: {}'.format(validator))
 
