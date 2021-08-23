@@ -79,6 +79,61 @@ def compare_dicts(expected_dict, actual_dict, path=None):
         compare_values(expected_value, actual_value, path=path)
 
 
+def validate_value_iso_datetime(matchstr):
+    '''
+    Test whether the 'matchstr' argument matches an
+    ISO-8601.2019 format date/time. An example of such
+    a date/time is '2021-11-30T14:20:15'
+    '''
+
+    rgx_pttn = r"""[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}"""
+
+    # method 1: using a compile object
+    compile_obj = re.compile(rgx_pttn)
+    match_obj = compile_obj.search(matchstr)
+
+    if match_obj:
+        return True
+    else:
+        return False
+
+
+def validate_value_iso_datetime_at_eoe(matchstr):
+    '''
+    Test whether the 'matchstr' argument matches an
+    ISO-8601.2019 format date/time and the value of the
+    date/time is '2300-01-01T00:00:00'
+    '''
+
+    rgx_pttn = r"""(?P<YYYY>[0-9]{4})
+    -
+    (?P<MM>[0-9]{2})
+    -
+    (?P<DD>[0-9]{2})
+    T
+    (?P<HH24>[0-9]{2})
+    :
+    (?P<MI>[0-9]{2})
+    :
+    (?P<S>[0-9]{2})"""
+
+    if validate_value_iso_datetime(matchstr):
+        compile_obj = re.compile(rgx_pttn,  re.MULTILINE| re.VERBOSE)
+        match_obj = compile_obj.search(matchstr)
+        #
+        if ((match_obj.group('YYYY') == "2300") and
+            (match_obj.group('MM') == "01") and
+            (match_obj.group('DD') == "01") and
+            (match_obj.group('DD') == "01") and
+            (match_obj.group('HH24') == "00") and
+            (match_obj.group('MI') == "00") and
+            (match_obj.group('S') == "00")):
+            return True
+        else:
+            return False
+    else:
+        return False
+
 def validate_value(validator, value):
     if validator == 'int':
         return type(value) == int
@@ -86,8 +141,15 @@ def validate_value(validator, value):
         return type(value) == float
     if validator == 'number':
         return type(value) == int or type(value) == float
-    if validator == 'anything':
-        return True
+    if validator == 'integer':
+        return type(value) == int
+    if validator == 'positive_integer':
+        return type(value) == int and (value >= 0)
+    if validator == 'iso_date_time':
+		return validate_value_iso_datetime(value)
+    if validator == 'iso_date_time_at_eoe':
+		return validate_value_iso_datetime_at_eoe(value)
+
     raise Exception('Unknown validator: {}'.format(validator))
 
 
