@@ -86,6 +86,8 @@ def validate_value(validator, value):
         return type(value) == float
     if validator == 'number':
         return type(value) == int or type(value) == float
+    if validator == 'anything':
+        return True
     raise Exception('Unknown validator: {}'.format(validator))
 
 
