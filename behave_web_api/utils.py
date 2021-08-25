@@ -149,6 +149,8 @@ def validate_value(validator, value):
         return type(value) == str
     if validator == 'string_and_not_empty':
         return (type(value) == str and (len(value) > 0))
+    if validator == 'numeric_true_false':
+        return ((type(value) == int) and ((value==0) or (value==1)))
     if validator == 'iso_date_time':
         return validate_value_iso_datetime(value)
     if validator == 'iso_date_time_at_eoe':
