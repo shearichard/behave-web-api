@@ -144,7 +144,11 @@ def validate_value(validator, value):
     if validator == 'integer':
         return type(value) == int
     if validator == 'positive_integer':
-        return type(value) == int and (value >= 0)
+        return (type(value) == int and (value >= 0))
+    if validator == 'string':
+        return type(value) == str
+    if validator == 'string_and_not_empty':
+        return (type(value) == str and (len(value) > 0))
     if validator == 'iso_date_time':
         return validate_value_iso_datetime(value)
     if validator == 'iso_date_time_at_eoe':
