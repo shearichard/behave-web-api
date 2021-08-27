@@ -96,13 +96,13 @@ def compare_dicts_structure(expected_dict, actual_dict):
 
         #Prepare a composite exception message and raise the Exception
         if msg_keys_in_act_but_not_exp and msg_keys_in_exp_but_not_act:
-            msg_assert = '''{msg_assert}. {msg_keys_in_act_but_not_exp} . {msg_keys_in_exp_but_not_act} .'''.format(msg_assert, msg_keys_in_act_but_not_exp, msg_keys_in_exp_but_not_act)
+            msg_assert = '''{}. {} . {} .'''.format(msg_assert, msg_keys_in_act_but_not_exp, msg_keys_in_exp_but_not_act)
             raise AssertionError (msg_assert)
         elif msg_keys_in_act_but_not_exp:
-            msg_assert = '''{msg_assert}. {msg_keys_in_act_but_not_exp} .'''.format(msg_assert, msg_keys_in_act_but_not_exp)
+            msg_assert = '''{}. {} .'''.format(msg_assert, msg_keys_in_act_but_not_exp)
             raise AssertionError (msg_assert)
         elif msg_keys_in_exp_but_not_act:
-            msg_assert = '''{msg_assert}. {msg_keys_in_exp_but_not_act} .'''.format(msg_assert, msg_keys_in_exp_but_not_act)
+            msg_assert = '''{}. {} .'''.format(msg_assert, msg_keys_in_exp_but_not_act)
             raise AssertionError (msg_assert)
 
 
