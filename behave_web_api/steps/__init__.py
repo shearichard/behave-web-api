@@ -83,17 +83,22 @@ def the_response_should_be(context, status_code):
 @then(u'the response should contain a json list with members like')
 @dereference_arguments
 def the_response_should_contain_a_json_list_with_members_like(context):
+    '''
+    Compares both the structure and the values of the expected and actual.
+    The test will fail if there are properties in the expected which are not
+    in the actual and vica-versa.
+    '''
     expected_data = json.loads(context.processed_text)
     actual_data = json.loads(context.response.text)
     if isinstance(actual_data, list) and (len(actual_data) > 0) :
         #Take the first element off the list and let that 
         #be used for the comparison
-        compare_values(expected_data, actual_data[0])
+        compare_values(expected_data, actual_data[0], strict=True)
     else:
         #If the response is something other than a non-empty
         #list just let it go into the compare and get dealt
         #with there
-        compare_values(expected_data, actual_data)
+        compare_values(expected_data, actual_data, strict=True)
 
 
 @then(u'the response should contain json')
@@ -101,7 +106,7 @@ def the_response_should_contain_a_json_list_with_members_like(context):
 def the_response_should_contain_json(context):
     expected_data = json.loads(context.processed_text)
     actual_data = json.loads(context.response.text)
-    compare_values(expected_data, actual_data)
+    compare_values(expected_data, actual_data, strict=True)
 
 
 @then(u'the response should contain text')

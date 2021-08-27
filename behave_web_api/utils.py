@@ -67,18 +67,22 @@ def compare_lists(expected_list, actual_list, path=None):
         compare_values(item, actual_value, path=path)
 
 
-def compare_dicts(expected_dict, actual_dict, path=None):
+def compare_dicts(expected_dict, actual_dict, strict=False, path=None):
     assert type(expected_dict) is dict,\
         "Expected {0} is not a dict".format(repr(expected_dict))
     assert type(actual_dict) is dict,\
         "Actual {0} is not a dict".format(repr(actual_dict))
+
+    if strict:
+        assert expected_dict.keys() == actual_dict.keys(), \
+            "Keys/Properties of actual values do not match those of expected values"
 
     for key in expected_dict:
         expected_value = expected_dict[key]
         actual_value = actual_dict.get(key, None)
         path = '{0}.{1}'.format(path, key) if path else key
 
-        compare_values(expected_value, actual_value, path=path)
+        compare_values(expected_value, actual_value, strict=False, path=path)
 
 
 def validate_value_iso_datetime(matchstr):
@@ -197,12 +201,12 @@ def validate_value(validator, value):
     raise Exception('Unknown validator: {}'.format(validator))
 
 
-def compare_values(expected_value, actual_value, path=None):
+def compare_values(expected_value, actual_value, strict=False, path=None):
     validator_pattern = r'^<is_(.+)>$'
     regex_pattern = r'^%(.+)%$'
 
     if type(expected_value) is dict:
-        compare_dicts(expected_value, actual_value, path=path)
+        compare_dicts(expected_value, actual_value, strict=strict, path=path)
     elif type(expected_value) is list:
         compare_lists(expected_value, actual_value, path=path)
     elif isinstance(expected_value, string_type) and re.match(regex_pattern, expected_value):
