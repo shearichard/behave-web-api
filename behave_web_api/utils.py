@@ -4,6 +4,8 @@ import re
 import requests
 from functools import wraps
 
+NULL_SUFFIX = '''_or_null'''
+
 try:
     string_type = basestring
 except NameError:  # Python 3, basestring causes NameError
@@ -135,6 +137,41 @@ def validate_value_iso_datetime_at_eoe(matchstr):
         return False
 
 def validate_value(validator, value):
+    '''
+    Test whether the 'value' argument matches one of a set
+    of pre-determined situations defined by the value of the
+    'validator' argument.
+
+    In addition deal with a special case where the validator
+    string is suffixed with a string to indicate that None
+    is a valid value 
+    '''
+
+    # If the validator string ends with the 'NULL_SUFFIX'
+    # then trim the 'NULL_SUFFIX' off the end of the validator
+    # so that, for instance, ...
+    #
+    # 'integer_or_null'
+    # 
+    # ... becomes ....
+    # 
+    # 'integer'.
+    # 
+    # In addition if the value is None (what null from JSON
+    # gets converted to) then return True, otherwise just let
+    # the normal validation take its course.
+    #
+    null_sfx_idx = -1 * len(NULL_SUFFIX)
+
+    if validator[null_sfx_idx : ]  == NULL_SUFFIX:
+        #Trim the NULL_SUFFIX_ off the 'validator value'
+        validator = validator[ : null_sfx_idx]
+        #If the value is None, return True
+        if value==None:
+            return True
+
+    #Having dealt with the 'NULL_SUFFIX' special case now 
+    #proceed with normal processing.
     if validator == 'int':
         return type(value) == int
     if validator == 'float':
@@ -155,6 +192,7 @@ def validate_value(validator, value):
         return validate_value_iso_datetime(value)
     if validator == 'iso_date_time_at_eoe':
         return validate_value_iso_datetime_at_eoe(value)
+
 
     raise Exception('Unknown validator: {}'.format(validator))
 
