@@ -67,6 +67,45 @@ def compare_lists(expected_list, actual_list, path=None):
         compare_values(item, actual_value, path=path)
 
 
+def compare_dicts_structure(expected_dict, actual_dict):
+    '''
+    Make a comparison of the keys of the two dictionaries passed
+    and if they are not the same prepare an assertion message on 
+    how they differ and raise the AssertionError
+    '''
+    msg_assert = "Keys/Properties of actual values do not match those of expected values"
+    msg_keys_in_act_but_not_exp = ""
+    msg_keys_in_exp_but_not_act = ""
+
+    if expected_dict.keys() == actual_dict.keys():
+        pass
+    else:
+        set_exp_keys = set(expected_dict.keys())
+        set_actual_keys = set(actual_dict.keys())
+        #Deal with actual keys not seen in expected
+        exp_keys_not_in_act = set_exp_keys - set_actual_keys
+        if exp_keys_not_in_act:
+            str_exp_keys_not_in_act = " ,".join(exp_keys_not_in_act)
+            msg_keys_in_act_but_not_exp = '''The following keys are in the actual values but not the expected values : {}'''.format(str_exp_keys_not_in_act)
+
+        #Deal with expected keys not seen in actual
+        act_keys_not_in_exp = set_actual_keys - set_exp_keys
+        if act_keys_not_in_exp:
+            str_act_keys_not_in_exp = " ,".join(act_keys_not_in_exp)
+            msg_keys_in_exp_but_not_act = '''The following keys are in the expected values but not the actual values : {}'''.format(str_act_keys_not_in_exp)
+
+        #Prepare a composite exception message and raise the Exception
+        if msg_keys_in_act_but_not_exp and msg_keys_in_exp_but_not_act:
+            msg_assert = '''{msg_assert}. {msg_keys_in_act_but_not_exp} . {msg_keys_in_exp_but_not_act} .'''.format(msg_assert, msg_keys_in_act_but_not_exp, msg_keys_in_exp_but_not_act)
+            raise AssertionError (msg_assert)
+        elif msg_keys_in_act_but_not_exp:
+            msg_assert = '''{msg_assert}. {msg_keys_in_act_but_not_exp} .'''.format(msg_assert, msg_keys_in_act_but_not_exp)
+            raise AssertionError (msg_assert)
+        elif msg_keys_in_exp_but_not_act:
+            msg_assert = '''{msg_assert}. {msg_keys_in_exp_but_not_act} .'''.format(msg_assert, msg_keys_in_exp_but_not_act)
+            raise AssertionError (msg_assert)
+
+
 def compare_dicts(expected_dict, actual_dict, strict=False, path=None):
     assert type(expected_dict) is dict,\
         "Expected {0} is not a dict".format(repr(expected_dict))
@@ -74,8 +113,7 @@ def compare_dicts(expected_dict, actual_dict, strict=False, path=None):
         "Actual {0} is not a dict".format(repr(actual_dict))
 
     if strict:
-        assert expected_dict.keys() == actual_dict.keys(), \
-            "Keys/Properties of actual values do not match those of expected values"
+        compare_dicts_structure(expected_dict, actual_dict)
 
     for key in expected_dict:
         expected_value = expected_dict[key]
