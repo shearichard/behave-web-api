@@ -86,13 +86,13 @@ def compare_dicts_structure(expected_dict, actual_dict):
         exp_keys_not_in_act = set_exp_keys - set_actual_keys
         if exp_keys_not_in_act:
             str_exp_keys_not_in_act = " ,".join(exp_keys_not_in_act)
-            msg_keys_in_act_but_not_exp = '''The following keys are in the actual values but not the expected values : {}'''.format(str_exp_keys_not_in_act)
+            msg_keys_in_exp_but_not_act = '''The following keys are in the expected values but not the actual values : {}'''.format(str_exp_keys_not_in_act)
 
         #Deal with expected keys not seen in actual
         act_keys_not_in_exp = set_actual_keys - set_exp_keys
         if act_keys_not_in_exp:
             str_act_keys_not_in_exp = " ,".join(act_keys_not_in_exp)
-            msg_keys_in_exp_but_not_act = '''The following keys are in the expected values but not the actual values : {}'''.format(str_act_keys_not_in_exp)
+            msg_keys_in_act_but_not_exp = '''The following keys are in the actual values but not the expected values : {}'''.format(str_act_keys_not_in_exp)
 
         #Prepare a composite exception message and raise the Exception
         if msg_keys_in_act_but_not_exp and msg_keys_in_exp_but_not_act:
