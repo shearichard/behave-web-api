@@ -203,6 +203,10 @@ def validate_value(validator, value):
     # gets converted to) then return True, otherwise just let
     # the normal validation take its course.
     #
+    print(validator)
+    print(value)
+    print("-------------------------------------------")
+    print("")
     null_sfx_idx = -1 * len(NULL_SUFFIX)
 
     if validator[null_sfx_idx : ]  == NULL_SUFFIX:
