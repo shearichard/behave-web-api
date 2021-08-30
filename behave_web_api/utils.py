@@ -203,23 +203,15 @@ def validate_value(validator, value):
     # gets converted to) then return True, otherwise just let
     # the normal validation take its course.
     #
-    print(validator)
-    print(value)
     null_sfx_idx = -1 * len(NULL_SUFFIX)
 
     if validator[null_sfx_idx : ]  == NULL_SUFFIX:
-        print("null suffix found")
         #Trim the NULL_SUFFIX_ off the 'validator value'
         validator = validator[ : null_sfx_idx]
-        print(value)
-        print("-------------------------------------------")
-        print("")
         #If the value is None, return True
         if value==None:
             return True
 
-    print("-------------------------------------------")
-    print("")
 
     #Having dealt with the 'NULL_SUFFIX' special case now 
     #proceed with normal processing.
